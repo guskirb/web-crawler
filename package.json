@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node dist/main",
+    "start": "node --no-warnings dist/main",
     "build": "tsc",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/main.js\"",
     "test": "jest"
