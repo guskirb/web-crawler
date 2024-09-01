@@ -84,3 +84,19 @@ test("getUrlsFromHTML multiple links", () => {
   ];
   expect(actual).toEqual(expected);
 });
+
+test("getUrlsFromHTML invalid url", () => {
+  const inputHTMLBody = `
+  <html>
+      <body>
+          <a href="invalid">
+              Invalid
+          </a>
+      </body>
+  </html>
+  `;
+  const inputBaseUrl = "https://google.com";
+  const actual = getUrlsFromHTML(inputHTMLBody, inputBaseUrl);
+  const expected: any = [];
+  expect(actual).toEqual(expected);
+});

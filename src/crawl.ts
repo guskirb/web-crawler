@@ -18,10 +18,20 @@ export function getUrlsFromHTML(HTMLBody: string, baseUrl: string) {
   for (const element of linkElements) {
     if (element.href.slice(0, 1) === "/") {
       // relative url
-      urls.push(`${baseUrl}${element.href}`);
+      try {
+        const url = new URL(`${baseUrl}${element.href}`);
+        urls.push(url.href);
+      } catch (err) {
+        console.log(`Error with relative url: ${err}`);
+      }
     } else {
       // absolute url
-      urls.push(element.href);
+      try {
+        const url = new URL(element.href);
+        urls.push(url.href);
+      } catch (err) {
+        console.log(`Error with absolute url: ${err}`);
+      }
     }
   }
   return urls;
