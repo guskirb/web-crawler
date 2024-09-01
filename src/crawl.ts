@@ -1,3 +1,5 @@
+import { JSDOM } from "jsdom";
+
 export function normaliseUrl(url: string) {
   const urlObj = new URL(url);
   const hostPath = `${urlObj.hostname}${urlObj.pathname}`;
@@ -6,4 +8,21 @@ export function normaliseUrl(url: string) {
     return hostPath.slice(0, -1);
   }
   return hostPath;
+}
+
+export function getUrlsFromHTML(HTMLBody: string, baseUrl: string) {
+  const urls = new Array<string>();
+  const dom = new JSDOM(HTMLBody);
+
+  const linkElements = dom.window.document.querySelectorAll("a");
+  for (const element of linkElements) {
+    if (element.href.slice(0, 1) === "/") {
+      // relative url
+      urls.push(`${baseUrl}${element.href}`);
+    } else {
+      // absolute url
+      urls.push(element.href);
+    }
+  }
+  return urls;
 }
